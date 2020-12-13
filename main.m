@@ -38,44 +38,55 @@ beta_o2 = 1e-3/D_p;                     % outlet throttle to pipe diameter ratio
 gamma_1 = A_o1*(1-beta_o2^4);
 gamma_2 = A_o2*(1-beta_o1^4);
 
-%% static calculation
-P_in = 0.1e6;                           % inlet pressure
-P_out = 0.1e6;                          % ambient pressure
+%% calculation mode switch
+% 1 - static calculation
+% 2 - dynamics calculation
 
-P_red = (gamma_1*P_in + gamma_2*P_out)/(gamma_1 + gamma_2);
+calc_mode = 1;
 
-%% dynamic calculation
-t_sim = [0 20];                        % simulation start and stop time
-
-i_c = [0 0];                           % initial conditions for x(1) and x(2)
-
-param_set = [A_o2, beta_o2, P_out, D_s, ...
-    a, D_p, F_init, k, m_s, D_w];      % parameters vector for ode
-
-[t, y] = ode45(@(t, x) eom(t, x, param_set), t_sim, i_c);
-
+assert(calc_mode == 1 || calc_mode == 2, 'Calculation mode can be either 1 or 2');
 %%
-% given y - state vector of the spool, calculate evolution of P_red
-
-P_red = reduced_pressure(t, y, param_set);
-
-P_in = 0.9e5*t + 1e5;                   % ramp input 0.1 MPa .. 1 MPa in 10 s
-
-P_des = 0*t + 1e6;                      % desired reduced pressure value 1 Mpa
-
-%% plot system dynamics simulation results
-figure
-subplot(2,1,1)
-% plot spool position dynamics
-plot(t,y(:,1),'k-','LineWidth',2);
-legend('spool position','Location','best')
-set(gca,'Fontsize',14)
-subplot(2,1,2)
-% plot pressure values evolution for P_red and P_in
-plot(t,P_in,'k--','LineWidth',2)
-hold on
-plot(t,P_red,'r-','LineWidth',2)
-plot(t,P_des,'LineWidth',2,'Color','#a8a8a8')
-legend('inlet pressure','reduced pressure','desired reduced pressure','Location','best');
-set(gca,'Fontsize',14);
-
+switch calc_mode
+    case 1
+        %% static calculation
+        P_in = 0.1e6;                           % inlet pressure
+        P_out = 0.1e6;                          % ambient pressure
+        
+        P_red = (gamma_1*P_in + gamma_2*P_out)/(gamma_1 + gamma_2);
+        
+    case 2
+        %% dynamic calculation
+        t_sim = [0 20];                        % simulation start and stop time
+        
+        i_c = [0 0];                           % initial conditions for x(1) and x(2)
+        
+        param_set = [A_o2, beta_o2, P_out, D_s, ...
+            a, D_p, F_init, k, m_s, D_w];      % parameters vector for ode
+        
+        [t, y] = ode45(@(t, x) eom(t, x, param_set), t_sim, i_c);
+        
+        %%
+        % given y - state vector of the spool, calculate evolution of P_red
+        
+        P_red = reduced_pressure(t, y, param_set);
+        
+        P_in = 0.9e5*t + 1e5;                   % ramp input 0.1 MPa .. 1 MPa in 10 s
+        
+        P_des = 0*t + 1e6;                      % desired reduced pressure value 1 Mpa
+        
+        %% plot system dynamics simulation results
+        figure
+        subplot(2,1,1)
+        % plot spool position dynamics
+        plot(t,y(:,1),'k-','LineWidth',2);
+        legend('spool position','Location','best')
+        set(gca,'Fontsize',14)
+        subplot(2,1,2)
+        % plot pressure values evolution for P_red and P_in
+        plot(t,P_in,'k--','LineWidth',2)
+        hold on
+        plot(t,P_red,'r-','LineWidth',2)
+        plot(t,P_des,'LineWidth',2,'Color','#a8a8a8')
+        legend('inlet pressure','reduced pressure','desired reduced pressure','Location','best');
+        set(gca,'Fontsize',14);
+end
