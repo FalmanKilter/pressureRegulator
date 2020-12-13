@@ -14,7 +14,7 @@ beta_o2 = param_set(2);
 P_out = param_set(3);
 D_s = param_set(4);
 a = param_set(5);
-D_p = param_set(6);
+D_w = param_set(6);
 F_init = param_set(7);
 k = param_set(8);
 m_s = param_set(9);
@@ -30,7 +30,7 @@ A_o1 = a*(a-x(1));                  % current area of the valve
 if A_o1<0, A_o1 = 0;
 end                                 % valve closes if x(1)>a, so A_o1 is non-negative
 
-beta_o1 = sqrt(4*A_o1/pi)/D_p;      % current area of the valve/pipe
+beta_o1 = sqrt(4*A_o1/pi)/D_w;      % equivalent valve to equivalent window diameter ratio 
 
 gamma_1 = A_o1*(1-beta_o2^4);
 gamma_2 = A_o2*(1-beta_o1^4);

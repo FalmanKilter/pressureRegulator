@@ -11,7 +11,7 @@ A_o2 = param_set(1);
 beta_o2 = param_set(2);
 P_out = param_set(3);
 a = param_set(5);
-D_w = param_set(10);
+D_w = param_set(6);
 
 % calculate reduced pressure at each time step using spool position y(:,1)
 % and inlet pressure P_in
