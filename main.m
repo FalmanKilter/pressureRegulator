@@ -39,7 +39,7 @@ gamma_1 = A_o1*(1-beta_o2^4);
 gamma_2 = A_o2*(1-beta_o1^4);
 
 P_out = 0.1e6;                          % ambient pressure
-
+P_des = 1e6;                            % desired reduced pressure
 %% calculation mode switch
 % 1 - static calculation
 % 2 - dynamics calculation
@@ -73,7 +73,7 @@ switch calc_mode
         
         P_in = 0.9e5*t + 1e5;                   % ramp input 0.1 MPa .. 1 MPa in 10 s
         
-        P_des = 0*t + 1e6;                      % desired reduced pressure value 1 Mpa
+        P_des_array = 0*t + 1e6;                % desired reduced pressure value 1 Mpa
         
         %% plot system dynamics simulation results
         figure
@@ -87,7 +87,7 @@ switch calc_mode
         plot(t,P_in,'k--','LineWidth',2)
         hold on
         plot(t,P_red,'r-','LineWidth',2)
-        plot(t,P_des,'LineWidth',2,'Color','#a8a8a8')
+        plot(t,P_des_array,'LineWidth',2,'Color','#a8a8a8')
         legend('inlet pressure','reduced pressure','desired reduced pressure','Location','best');
         set(gca,'Fontsize',14);
 end
