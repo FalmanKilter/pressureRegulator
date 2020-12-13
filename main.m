@@ -90,3 +90,5 @@ switch calc_mode
         legend('inlet pressure','reduced pressure','desired reduced pressure','Location','best');
         set(gca,'Fontsize',14);
 end
+
+b = 5;
