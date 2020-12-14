@@ -16,6 +16,7 @@ close all
 %   P_out - outlet pressure [Pa] (constant)
 
 %%
+% initialise system parameters
 
 a = 0.0095;                             % window size       (optimised)
 D_s = 0.0314;                           % spool diameter    (optimised)
