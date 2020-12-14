@@ -17,12 +17,12 @@ close all
 
 %%
 
-a = 1e-2;
-D_s = 3*a;                              % spool diameter
+a = 0.0095;                             % window size       (optimised)
+D_s = 0.0314;                           % spool diameter    (optimised)
 
 F_init = 1e6*(pi*D_s^2)/4;              % initial force on the spool
 
-k = 5*F_init/a;                         % spring stiffness
+k = 4.38e+03;                           % spring stiffness  (optimised)
 
 m_s = spool_mass(a);                    % spool mass
 
@@ -44,7 +44,7 @@ P_des = 1e6;                            % desired reduced pressure
 % 1 - static calculation
 % 2 - dynamics calculation
 
-calc_mode = 2;
+calc_mode = 1;
 
 assert(calc_mode == 1 || calc_mode == 2, 'Calculation mode can be either 1 or 2');
 %%
