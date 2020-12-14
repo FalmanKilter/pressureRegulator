@@ -29,7 +29,7 @@ m_s = spool_mass(a);                    % spool mass
 D_p = 4e-3;                             % pipe diameter (GOST - 11881 - 76)
 D_w = sqrt(4*a^2/pi);                   % equivalent diameter of the window
 
-A_o1 = 0;                               % valve open
+A_o1 = a^2;                             % valve open
 A_o2 = pi*1e-3^2/4;                     % outlet orifice area  (constant diameter 1 mm)
 
 beta_o1 = sqrt(4*A_o1/pi)/D_w;          % valve to pipe diameter ratio
