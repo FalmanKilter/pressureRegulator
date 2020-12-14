@@ -38,9 +38,8 @@ gamma_2 = A_o2*(1-beta_o1^4);
 P_red = (gamma_1*P_in + gamma_2*P_out)/(gamma_1 + gamma_2);
 % and reduced pressure force on the spool, assuming it acts on the whole
 % surface, i.e. shoulder area is neglected (unlike the shoulder force)
-% only gauge pressure generates force, hence the P_red-Pout term
 
-F_red = (P_red-P_out)*(pi*D_s^2)/4;
+F_red = P_red*(pi*D_s^2)/4;
 
 if F_red<F_init
     F_red = F_init;

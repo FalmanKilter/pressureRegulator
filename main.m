@@ -18,12 +18,13 @@ close all
 %%
 % initialise system parameters
 
-a = 0.0095;                             % window size       (optimised)
-D_s = 0.0314;                           % spool diameter    (optimised)
+a = 0.0094;                             % window size       (optimised)
+D_s = 0.0291;                            % spool diameter    (optimised)
 
 F_init = 1e6*(pi*D_s^2)/4;              % initial force on the spool
 
-k = 4.38e+03;                           % spring stiffness  (optimised)
+k = 4.358e+03;                           % spring stiffness  (optimised)
+b = 43;                                % friction coefficient for steel on steel
 
 m_s = spool_mass(a);                    % spool mass
 
@@ -39,8 +40,14 @@ beta_o2 = 1e-3/D_p;                     % outlet throttle to pipe diameter ratio
 gamma_1 = A_o1*(1-beta_o2^4);
 gamma_2 = A_o2*(1-beta_o1^4);
 
-P_out = 0.1e6;                          % ambient pressure
-P_des = 1e6;                            % desired reduced pressure
+P_out = 0;                              % ambient pressure          (gauge)
+P_des = 1e6;                            % desired reduced pressure  (gauge)
+
+% calculated minimum inlet pressure for P_red to fall within 2% of P_des
+% must be recalculated should any parameters change!
+
+P_in_min = 1.17e6;
+
 %% calculation mode switch
 % 1 - static calculation
 % 2 - dynamics calculation
