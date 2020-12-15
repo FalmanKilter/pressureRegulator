@@ -24,7 +24,7 @@ D_s = 0.025;                            % spool diameter    (optimised)
 F_init = 0.8e6*(pi*D_s^2)/4;            % initial force on the spool
 
 k = 2.3e3;                              % spring stiffness  (optimised)
-b = 0.18;                               % damping coefficient (arbitrary)
+b = 2.3e2;                              % damping coefficient (arbitrary)
 
 m_s = spool_mass(a);                    % spool mass
 
@@ -46,7 +46,7 @@ P_des = 1e6;                            % desired reduced pressure  (gauge)
 % calculated minimum inlet pressure for P_red to fall within 2% of P_des
 % must be recalculated should any parameters change!
 
-P_in_min = 1.11e6;
+P_in_min = 1.08e6;
 
 %% calculation mode switch
 % 1 - static calculation
