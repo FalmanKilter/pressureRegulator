@@ -25,7 +25,10 @@ m_s = param_set(9);
 P_in = 0.9e5*t + 1e5;               % ramp input 0.1 MPa .. 1 MPa in 10 s
 % calculate current values of the valve parameters
 
-A_o1 = a*(a-x(1));                  % current area of the valve
+% calculate effective valve area
+alpha = 2*asin(a/D_s);              % angular extent of the window
+l = (D_s/2)*alpha;                  % circumferential length of the window
+A_o1 = l*(a-x1);                    % current area of the valve
 
 if A_o1<0, A_o1 = 0;
 end                                 % valve closes if x(1)>a, so A_o1 is non-negative
