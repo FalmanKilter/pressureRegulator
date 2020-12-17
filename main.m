@@ -19,12 +19,12 @@ close all
 % initialise system parameters
 
 a = 0.005;                              % window size       (optimised)
-D_s = 0.025;                            % spool diameter    (optimised)
+D_s = 0.0257;                            % spool diameter    (optimised)
 
-F_init = 0.8e6*(pi*D_s^2)/4;            % initial force on the spool
+F_init = 0.98e6*(pi*D_s^2)/4;            % initial force on the spool
 
-k = 2.3e3;                              % spring stiffness  (optimised)
-b = 2.3e2;                              % damping coefficient (arbitrary)
+k = 2.23e3;                              % spring stiffness  (optimised)
+b = 2.23e2;                              % damping coefficient (arbitrary)
 
 m_s = spool_mass(a);                    % spool mass
 
@@ -37,8 +37,8 @@ A_o2 = pi*1e-3^2/4;                     % outlet orifice area  (constant diamete
 beta_o1 = sqrt(4*A_o1/pi)/D_w;          % valve to pipe diameter ratio
 beta_o2 = 1e-3/D_p;                     % outlet throttle to pipe diameter ratio
 
-gamma_1 = A_o1*(1-beta_o2^4);
-gamma_2 = A_o2*(1-beta_o1^4);
+gamma_1 = A_o1^2*(1-beta_o2^4);
+gamma_2 = A_o2^2*(1-beta_o1^4);
 
 P_out = 0;                              % ambient pressure          (gauge)
 P_des = 1e6;                            % desired reduced pressure  (gauge)
@@ -52,7 +52,7 @@ P_in_min = 1.08e6;
 % 1 - static calculation
 % 2 - dynamics calculation
 
-calc_mode = 1;
+calc_mode = 2;
 
 assert(calc_mode == 1 || calc_mode == 2, 'Calculation mode can be either 1 or 2');
 %%
@@ -70,7 +70,7 @@ switch calc_mode
         i_c = [0 0];                           % initial conditions for x(1) and x(2)
         
         param_set = [A_o2, beta_o2, P_out, D_s, ...
-            a, D_w, F_init, k, m_s];      % parameters vector for ode
+            a, D_w, F_init, k, b, m_s];      % parameters vector for ode
         
         [t, y] = ode45(@(t, x) eom(t, x, param_set), t_sim, i_c);
         

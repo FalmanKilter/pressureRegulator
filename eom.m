@@ -17,7 +17,8 @@ a = param_set(5);
 D_w = param_set(6);
 F_init = param_set(7);
 k = param_set(8);
-m_s = param_set(9);
+b = param_set(9);
+m_s = param_set(10);
 
 % calculate current value of P_in as a function of time
 %P_in = 0.1e6;                      % constant, ambient
@@ -28,15 +29,15 @@ P_in = 0.9e5*t + 1e5;               % ramp input 0.1 MPa .. 1 MPa in 10 s
 % calculate effective valve area
 alpha = 2*asin(a/D_s);              % angular extent of the window
 l = (D_s/2)*alpha;                  % circumferential length of the window
-A_o1 = l*(a-x1);                    % current area of the valve
+A_o1 = l*(a-x(1));                    % current area of the valve
 
 if A_o1<0, A_o1 = 0;
 end                                 % valve closes if x(1)>a, so A_o1 is non-negative
 
 beta_o1 = sqrt(4*A_o1/pi)/D_w;      % equivalent valve to equivalent window diameter ratio 
 
-gamma_1 = A_o1*(1-beta_o2^4);
-gamma_2 = A_o2*(1-beta_o1^4);
+gamma_1 = A_o1^2*(1-beta_o2^4);
+gamma_2 = A_o2^2*(1-beta_o1^4);
 % calculate current reduced pressure
 P_red = (gamma_1*P_in + gamma_2*P_out)/(gamma_1 + gamma_2);
 % and reduced pressure force on the spool, assuming it acts on the whole
@@ -51,5 +52,5 @@ end
 dx=zeros(2,1);
 
 dx(1)=x(2);
-dx(2)=(F_red-F_init)/m_s - k*x(1)/m_s;
+dx(2)=(F_red-F_init)/m_s - k*x(1)/m_s - b*(x(2))/m_s;
 end
